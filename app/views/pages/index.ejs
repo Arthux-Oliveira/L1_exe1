@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista 1 Exercício 1</title>
+</head>
+<body>
+
+    <form action="/classificar" method="post">
+
+        <label for="idade">Digite sua idade:</label> <br>
+        <input type="text" name="idade" id="idade" value="<%= valores.idade %>"> <br>
+        <button type="submit">Classificar</button>
+
+    </form>
+    <%
+
+        if(retorno){
+            %>
+            <h2>Categoria: <%= retorno.categoria %></h2>
+            <%
+        }else{
+            %>
+            <h2>Não temos retorno</h2>
+            <%
+        }
+
+
+    %>
+
+</body>
+</html>
