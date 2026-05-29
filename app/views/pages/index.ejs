@@ -1,33 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista 1 Exercício 1</title>
+    <title>Classificação de Nadadores</title>
+    <style>
+        .erro { border: 2px solid red; }
+        .msg-erro { color: red; font-size: 0.9em; }
+    </style>
 </head>
 <body>
-
-    <form action="/classificar" method="post">
-
-        <label for="idade">Digite sua idade:</label> <br>
-        <input type="text" name="idade" id="idade" value="<%= valores.idade %>"> <br>
-        <button type="submit">Classificar</button>
-
-    </form>
     <%
 
-        if(retorno){
-            %>
-            <h2>Categoria: <%= retorno.categoria %></h2>
-            <%
-        }else{
-            %>
-            <h2>Não temos retorno</h2>
-            <%
-        }
+    let erroValidacao = { "idade": "" };
+    let msgErro = { "idade": "" };
 
 
+    if(erros) {
+
+        
+        let listaErros = erros.errors ? erros.errors : erros;
+
+        listaErros.forEach(function(erro) {
+            if (erro.path == "idade") {
+                erroValidacao.idade = "erro";
+                msgErro.idade = erro.msg;
+            }
+        });
+    }
     %>
+
+    <h2>Classificar Nadador</h2>
+
+    <form action="/classificar" method="post">
+        <label for="idade">Digite sua idade:</label> <br>
+        
+        <input type="text" name="idade" id="idade" 
+               value="<%= valores.idade %>" 
+               class="<%= erroValidacao.idade %>"> 
+        
+        <span class="msg-erro"><%= msgErro.idade %></span> <br><br>
+
+        <button type="submit">Classificar</button>
+    </form>
+
+    <hr>
+
+    <% if(retorno) { %>
+        <h2>Categoria: <%= retorno.categoria %></h2>
+    <% } else { %>
+        <h2>Aguardando classificação...</h2>
+    <% } %>
 
 </body>
 </html>
